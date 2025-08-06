@@ -6,7 +6,7 @@ const FooterNav = () => {
   const router = useRouter()
 
   const segment = useSegments()
-  const activeRouter = segment[0] ?? ("" as string)
+  const activeRouter = "/" + segment[0] || ("" as string)
 
   return (
     <View className="flex-row justify-around border-t border-gray-300 bg-white p-[50px]">
