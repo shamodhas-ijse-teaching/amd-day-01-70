@@ -1,70 +1,24 @@
-import { View, Text } from "react-native"
+import { View, Text, SafeAreaView } from "react-native"
 import React from "react"
-import { Link, Slot } from "expo-router"
 import "./../global.css"
+import { Link, Slot, usePathname } from "expo-router"
+import FooterNav from "@/components/FooterNav"
+import { AuthProvider } from "@/context/AuthContext"
 
 const RootLayout = () => {
+  const pathname = usePathname()
+  console.log(pathname)
+
+  const hideFoter = ["/signup", "/login"].includes(pathname)
+
   return (
-    <View style={{ flex: 1, width: "100%" }} className="bg-green-400">
-      {/* Outlet - React */}
-      <Slot />
-      {/* / */}
-      {/* /profile */}
-      {/* /user */}
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          backgroundColor: "#e74c3c",
-          padding: 50,
-          justifyContent: "space-evenly"
-        }}
-      >
-        <View style={{ backgroundColor: "#000", padding: 10 }}>
-          <Link
-            href={"/"}
-            style={{
-              color: "#fff",
-              padding: 10
-            }}
-          >
-            Home
-          </Link>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#000",
-            padding: 10
-          }}
-        >
-          <Link
-            href={"/profile"}
-            style={{
-              color: "#fff",
-              padding: 10
-            }}
-          >
-            Profile
-          </Link>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#000",
-            padding: 10
-          }}
-        >
-          <Link
-            href={"/user"}
-            style={{
-              color: "#fff",
-              padding: 10
-            }}
-          >
-            User
-          </Link>
-        </View>
-      </View>
-    </View>
+    <AuthProvider>
+      <SafeAreaView className="flex-1 bg-green-400">
+        <Slot />
+
+        {hideFoter ? null : <FooterNav />}
+      </SafeAreaView>
+    </AuthProvider>
   )
 }
 
